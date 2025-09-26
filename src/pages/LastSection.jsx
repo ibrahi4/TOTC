@@ -25,7 +25,7 @@ export default function LastSection() {
             {/* Main News Card */}
             <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg">
               <img
-                src="/src/assets/images/labtop.png"
+                src="../assets/images/labtop.png"
                 alt="Zoom meeting on laptop"
                 className="w-full object-cover"
               />
@@ -55,7 +55,7 @@ export default function LastSection() {
               {/* Small News Card 1 */}
               <div className="flex rounded-2xl bg-white shadow-lg">
                 <img
-                  src="/src/assets/images/child.png"
+                  src="../assets/images/child.png"
                   alt="Student with tablet"
                   className="h-40 w-40 flex-shrink-0 rounded-l-2xl object-cover"
                 />
@@ -76,7 +76,7 @@ export default function LastSection() {
               {/* Small News Card 2 */}
               <div className="flex rounded-2xl bg-white shadow-lg">
                 <img
-                  src="/src/assets/images/emploee.png"
+                  src="../assets/images/emploee.png"
                   alt="Person on laptop with video call"
                   className="h-40 w-40 flex-shrink-0 rounded-l-2xl object-cover"
                 />
@@ -98,7 +98,7 @@ export default function LastSection() {
               {/* Small News Card 3 */}
               <div className="flex rounded-2xl bg-white shadow-lg">
                 <img
-                  src="/src/assets/images/cat.png"
+                  src="../assets/images/cat.png"
                   alt="Dog on video call"
                   className="h-40 w-40 flex-shrink-0 rounded-l-2xl object-cover"
                 />
