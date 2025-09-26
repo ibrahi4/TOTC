@@ -1,6 +1,5 @@
 import React from "react";
 import SectionTitle from "./SectionTitle";
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 export default function LastSection() {
   return (
