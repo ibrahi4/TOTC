@@ -1,4 +1,5 @@
 import SectionTitle from "./SectionTitle";
+import cat from "../assets/images/cat.png";
 import React from "react";
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa"; // Icons for social media
 
@@ -25,7 +26,7 @@ export default function LastSection() {
             {/* Main News Card */}
             <div className="relative overflow-hidden rounded-2xl bg-white shadow-lg">
               <img
-                src="../assets/images/labtop.png"
+                src={cat}
                 alt="Zoom meeting on laptop"
                 className="w-full object-cover"
               />
