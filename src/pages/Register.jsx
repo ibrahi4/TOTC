@@ -6,85 +6,75 @@ import AuthLayout from "../components/loginComponents/AuthLayout";
 import InputField from "../components/loginComponents/InputField";
 import PasswordField from "../components/loginComponents/PasswordField";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { setDoc, doc } from "firebase/firestore";
-import { auth, db } from "../firebase";
+import { auth, db } from "../firebase"; // ✅ db لازم هنا
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../authSlice";
 
-const SignupSchema = Yup.object({
-  name: Yup.string().min(2, "Too short").required("Full name is required"),
+const RegisterSchema = Yup.object({
+  name: Yup.string().required("Name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
-  username: Yup.string()
-    .min(3, "Minimum 3 characters")
-    .required("Username is required"),
   password: Yup.string()
     .min(6, "Minimum 6 characters")
     .required("Password is required"),
-  confirm: Yup.string()
-    .oneOf([Yup.ref("password")], "Passwords must match")
-    .required("Confirm password is required"),
 });
 
 export default function Register() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [serverMsg, setServerMsg] = useState(null);
 
   return (
     <AuthLayout
-      title="Create Account"
-      subtitle="Join and start learning today"
+      title="Register"
+      subtitle="Create a new account"
       page="register"
     >
       {serverMsg && (
-        <div
-          className={`mb-4 rounded-lg px-4 py-2 text-sm font-medium ${
-            serverMsg.type === "error"
-              ? "bg-red-50 text-red-700"
-              : "bg-green-50 text-green-700"
-          }`}
-        >
-          {serverMsg.message}
+        <div className="mb-4 rounded-lg px-4 py-2 text-sm font-medium bg-red-50 text-red-700">
+          {serverMsg}
         </div>
       )}
 
       <Formik
-        initialValues={{
-          name: "",
-          username: "",
-          email: "",
-          password: "",
-          confirm: "",
-        }}
-        validationSchema={SignupSchema}
+        initialValues={{ name: "", email: "", password: "" }}
+        validationSchema={RegisterSchema}
         onSubmit={async (values, { setSubmitting }) => {
           setServerMsg(null);
-          const { name, email, password, username } = values;
-
           try {
             const userCredential = await createUserWithEmailAndPassword(
               auth,
-              email,
-              password
+              values.email,
+              values.password
             );
             const user = userCredential.user;
-            await updateProfile(user, { displayName: name });
+
+            await updateProfile(user, { displayName: values.name });
+
+            // ✅ نخزن بيانات المستخدم في Firestore
             await setDoc(doc(db, "users", user.uid), {
-              uid: user.uid,
-              name,
-              email,
-              username,
-              isAdmin: false,
+              name: values.name,
+              email: values.email,
+              isAdmin: false, // 👈 بشكل افتراضي المستخدم مش Admin
             });
 
-            setServerMsg({
-              type: "success",
-              message: "Account created successfully!",
-            });
+            // نجيب البيانات تاني للتأكد
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
+
+            const userData = {
+              uid: user.uid,
+              email: user.email,
+              name: values.name,
+              isAdmin: docSnap.exists() ? docSnap.data().isAdmin : false,
+            };
+
+            dispatch(setCurrentUser(userData));
+
             navigate("/", { replace: true });
           } catch (error) {
             console.error(error);
-            setServerMsg({
-              type: "error",
-              message: error.message || "Signup failed",
-            });
+            setServerMsg("Registration failed. Try again.");
           } finally {
             setSubmitting(false);
           }
@@ -92,18 +82,20 @@ export default function Register() {
       >
         {({ isSubmitting }) => (
           <Form className="space-y-5">
-            <InputField name="name" label="Full Name" />
-            <InputField name="username" label="Username" />
-            <InputField name="email" label="Email" />
+            <InputField name="name" label="Name" placeholder="Your name" />
+            <InputField
+              name="email"
+              label="Email"
+              placeholder="you@example.com"
+            />
             <PasswordField name="password" label="Password" />
-            <PasswordField name="confirm" label="Confirm Password" />
 
             <button
               type="submit"
               disabled={isSubmitting}
               className="w-full rounded-2xl bg-cyan-700 hover:bg-cyan-800 text-white py-3.5 font-semibold shadow-lg transition-all"
             >
-              {isSubmitting ? "Creating…" : "Create Account"}
+              {isSubmitting ? "Creating account…" : "Register"}
             </button>
 
             <p className="text-center text-gray-900 dark:text-gray-100 text-sm">
@@ -112,7 +104,7 @@ export default function Register() {
                 to="/login"
                 className="text-cyan-700 font-semibold hover:underline"
               >
-                Sign in
+                Login
               </Link>
             </p>
           </Form>

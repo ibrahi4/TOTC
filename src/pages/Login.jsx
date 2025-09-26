@@ -6,7 +6,10 @@ import AuthLayout from "../components/loginComponents/AuthLayout";
 import InputField from "../components/loginComponents/InputField";
 import PasswordField from "../components/loginComponents/PasswordField";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase"; // ✅ db لازم هنا
+import { doc, getDoc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../authSlice";
 
 const LoginSchema = Yup.object({
   identifier: Yup.string().required("Email or username is required"),
@@ -17,6 +20,7 @@ const LoginSchema = Yup.object({
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [serverMsg, setServerMsg] = useState(null);
 
   return (
@@ -33,11 +37,26 @@ export default function Login() {
         onSubmit={async (values, { setSubmitting }) => {
           setServerMsg(null);
           try {
-            await signInWithEmailAndPassword(
+            const userCredential = await signInWithEmailAndPassword(
               auth,
               values.identifier,
               values.password
             );
+            const user = userCredential.user;
+
+            // ✅ نجيب بيانات المستخدم من Firestore
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
+
+            const userData = {
+              uid: user.uid,
+              email: user.email,
+              name: user.displayName || "",
+              isAdmin: docSnap.exists() ? docSnap.data().isAdmin : false,
+            };
+
+            dispatch(setCurrentUser(userData));
+
             navigate("/", { replace: true });
           } catch (error) {
             console.error(error);
