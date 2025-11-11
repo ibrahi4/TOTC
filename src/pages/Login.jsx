@@ -76,7 +76,7 @@ export default function Login() {
             <PasswordField name="password" label="Password" />
 
             <div className="flex justify-end text-sm">
-              <Link to="/reset" className="text-cyan-700 hover:underline">
+              <Link to="/reset" className="text-cyan-400 hover:underline">
                 Forgot Password?
               </Link>
             </div>
@@ -89,7 +89,7 @@ export default function Login() {
               {isSubmitting ? "Signing in…" : "Login"}
             </button>
 
-            <p className="text-center text-gray-900 dark:text-gray-100 text-sm">
+            <p className="text-center text-gray-200 dark:text-gray-100 text-sm">
               Don't have an account?{" "}
               <Link
                 to="/register"

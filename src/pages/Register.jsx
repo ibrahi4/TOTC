@@ -106,7 +106,7 @@ export default function Register() {
               {isSubmitting ? "Creating…" : "Create Account"}
             </button>
 
-            <p className="text-center text-gray-900 dark:text-gray-100 text-sm">
+            <p className="text-center text-gray-200 dark:text-gray-100 text-sm">
               Already have an account?{" "}
               <Link
                 to="/login"

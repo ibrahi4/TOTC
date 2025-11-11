@@ -20,7 +20,7 @@ export default function AuthLayout({
 
   return (
     <div
-      className="min-h-screen w-full flex items-center justify-center"
+      className="min-h-screen w-full flex items-center justify-center px-4 sm:px-6 lg:px-8"
       style={{
         backgroundImage: `url(${imageSrc})`,
         backgroundSize: "cover",
@@ -28,19 +28,34 @@ export default function AuthLayout({
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="w-full max-w-2xl sm:max-w-lg bg-white/20 dark:bg-gray-100/50 backdrop-blur-lg rounded-3xl  sm:p-8 shadow-2xl mt-10">
-        <header className="text-center">
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-700 dark:text-gray-700">
+      <div
+        className="
+          w-full
+          max-w-md
+          sm:max-w-lg
+          md:max-w-xl
+          lg:max-w-2xl
+          bg-white/20 dark:bg-gray-100/50
+          backdrop-blur-lg
+          rounded-3xl
+          p-6 sm:p-10
+          shadow-2xl
+          mt-10
+          mx-auto
+        "
+      >
+        <header className="text-center mb-6">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-700 dark:text-gray-700">
             {title}
           </h1>
           {subtitle && (
-            <p className="mt-2 text-white dark:text-gray-700 text-sm sm:text-base">
+            <p className="mt-2 text-gray-700 dark:text-gray-300 text-sm sm:text-base">
               {subtitle}
             </p>
           )}
         </header>
 
-        <div>{children}</div>
+        <div className="space-y-4">{children}</div>
       </div>
     </div>
   );
