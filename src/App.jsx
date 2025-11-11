@@ -17,7 +17,7 @@ import NotFound from "./pages/NotFound";
 import Forbidden from "./pages/Forbidden";
 import Favorites from "./pages/Favorites";
 import CartPanel from "./pages/CartPanel";
-import Checkout from "./pages/Checkout";
+import Checkout from "./pages/checkout";
 
 // Layout + Components
 import Navbar from "./HomeComponents/Navbar";
