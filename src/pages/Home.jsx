@@ -1,7 +1,7 @@
 import React from "react";
 import HeroSection from "../HomeComponents/HeroSection";
 
-import FeaturesSection from "../homeComponents/FeaturesSection";
+import FeaturesSection from "../homeComponents/featuresSection";
 
 import ShowcaseSection from "../HomeComponents/ShowcaseSection";
 import HighlightsSection from "../HomeComponents/HighlightsSection";
