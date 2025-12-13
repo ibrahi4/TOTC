@@ -295,9 +295,6 @@ export default function AdminCourses() {
                           <div className="font-medium text-white">
                             {localizeCourse(c, t).title}
                           </div>
-                          <div className="max-w-[480px] truncate text-xs text-white/60">
-                            {localizeCourse(c, t).description || "—"}
-                          </div>
                         </div>
                       </div>
                     </Td>
