@@ -35,7 +35,7 @@ export default function AuthLayout({
           sm:max-w-lg
           md:max-w-xl
           lg:max-w-2xl
-          bg-white/20 dark:bg-gray-100/50
+          bg-white/20 dark:bg-gray-100/60
           backdrop-blur-lg
           rounded-3xl
           p-6 sm:p-10
@@ -49,7 +49,7 @@ export default function AuthLayout({
             {title}
           </h1>
           {subtitle && (
-            <p className="mt-2 text-gray-700 dark:text-gray-300 text-sm sm:text-base">
+            <p className="mt-2 text-gray-700 dark:text-gray-700 text-sm sm:text-base">
               {subtitle}
             </p>
           )}

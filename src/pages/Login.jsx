@@ -76,7 +76,7 @@ export default function Login() {
             <PasswordField name="password" label="Password" />
 
             <div className="flex justify-end text-sm">
-              <Link to="/reset" className="text-cyan-400 hover:underline">
+              <Link to="/reset" className="text-cyan-800 hover:underline">
                 Forgot Password?
               </Link>
             </div>
